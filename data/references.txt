@@ -1,0 +1,3 @@
+transmission_lines.csv: https://digital.atlas.gov.au/datasets/70f23e91102a4d6899a776d093fa08ef_2/explore
+power_stations.csv: https://digital.atlas.gov.au/datasets/3d0f2d1b8aec4e1a8870b03ce11d4405_1/explore
+land_data.csv: https://digital.atlas.gov.au/datasets/e4690e3359c94f7ba076083646e407c6_0/explore
