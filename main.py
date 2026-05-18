@@ -22,3 +22,17 @@ qld_electricity_consumption = pd.read_csv("data/qld_average_electricity_consumpt
 
 qld_electricity_consumption.index = qld_electricity_consumption["Local Government Area"]
 qld_electricity_consumption.drop("Local Government Area", axis=1, inplace=True)
+
+# Example plot
+import matplotlib.pyplot as plt
+
+lga_df["geometry"].boundary.plot()
+plt.scatter(
+    power_stations_df["x_coordinate"],
+    power_stations_df["y_coordinate"],
+    s=power_stations_df["generationmw"] / 3 + 1
+)
+
+plt.axis("equal")
+plt.show()
+
