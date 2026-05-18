@@ -6,12 +6,19 @@ power_stations_df = pd.read_csv("data/power_stations.csv")
 power_stations_df.index = power_stations_df["objectid"]
 power_stations_df.drop("objectid", axis=1, inplace=True)
 
+power_stations_df["geometry"] = geo_pd.points_from_xy(power_stations_df["x_coordinate"], power_stations_df["y_coordinate"])
+power_stations_df.drop(["x_coordinate", "y_coordinate"], axis=1, inplace=True)
+
+power_stations_df = geo_pd.GeoDataFrame(power_stations_df)
+
 transmission_lines_df = pd.read_csv("data/power_stations.csv")
 
 transmission_lines_df.index = transmission_lines_df["objectid"]
 transmission_lines_df.drop("objectid", axis=1, inplace=True)
 
-lga_df = geo_pd.read_file("data/lga.shp")
+lga_df = geo_pd.read_file("data/lga/lga.shp")
+lga_df["geometry"] = lga_df["geometry"].buffer(0)
+lga_df = lga_df.dissolve(by="lga_name", as_index=False)
 
 nsw_electricity_consumption = pd.read_csv("data/nsw_average_electricity_consumption_by_lga.csv")
 
@@ -35,4 +42,3 @@ plt.scatter(
 
 plt.axis("equal")
 plt.show()
-
