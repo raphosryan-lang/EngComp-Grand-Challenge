@@ -1,7 +1,8 @@
 import pandas as pd
 import geopandas as geo_pd
-
-import renewable_generation_vs_sources
+import rasterio
+import rasterio.features
+import rioxarray
 
 power_stations_df = pd.read_csv("data/power_stations.csv")
 
@@ -20,7 +21,7 @@ transmission_lines_df = pd.read_csv("data/power_stations.csv")
 
 transmission_lines_df.index = transmission_lines_df["objectid"]
 transmission_lines_df.drop("objectid", axis=1, inplace=True)
-#hi im here
+
 lga_df = geo_pd.read_file("data/lga/lga.shp")
 lga_df["geometry"] = lga_df["geometry"].buffer(0)
 lga_df = lga_df.dissolve(by="lga_name", as_index=False)
@@ -35,8 +36,12 @@ qld_electricity_consumption = pd.read_csv("data/qld_average_electricity_consumpt
 qld_electricity_consumption.index = qld_electricity_consumption["Local Government Area"]
 qld_electricity_consumption.drop("Local Government Area", axis=1, inplace=True)
 
+# with rioxarray.open_rasterio("data/wind_power_density_50m_4.tif") as wind_file:
+#     print(wind_file[0].to_pandas().columns)
+
 # Example plot
 import matplotlib.pyplot as plt
+import renewable_generation_vs_sources
 
 renewable_generation_vs_sources.plot(plt.gca(), power_stations_df, lga_df)
 
