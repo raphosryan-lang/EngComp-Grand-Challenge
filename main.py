@@ -49,6 +49,42 @@ solar_df = geo_pd.GeoDataFrame(
     { "power": points["power"] },
     geometry=geo_pd.points_from_xy(points["x"], points["y"]),
 )
+
+with rioxarray.open_rasterio("data/wind_power_density_50m_downsampled.tif") as wind_50m_file:
+    points = wind_50m_file[0].to_pandas().stack().reset_index().dropna()
+    points.columns = ["y", "x", "power_density"]
+
+wind_50m_df = geo_pd.GeoDataFrame(
+    { "power_density": points["power_density"] },
+    geometry=geo_pd.points_from_xy(points["x"], points["y"]),
+)
+
+with rioxarray.open_rasterio("data/wind_power_density_100m_downsampled.tif") as wind_100m_file:
+    points = wind_100m_file[0].to_pandas().stack().reset_index().dropna()
+    points.columns = ["y", "x", "power_density"]
+
+wind_100m_df = geo_pd.GeoDataFrame(
+    { "power_density": points["power_density"] },
+    geometry=geo_pd.points_from_xy(points["x"], points["y"]),
+)
+
+with rioxarray.open_rasterio("data/wind_power_density_150m_downsampled.tif") as wind_150m_file:
+    points = wind_150m_file[0].to_pandas().stack().reset_index().dropna()
+    points.columns = ["y", "x", "power_density"]
+
+wind_150m_df = geo_pd.GeoDataFrame(
+    { "power_density": points["power_density"] },
+    geometry=geo_pd.points_from_xy(points["x"], points["y"]),
+)
+
+with rioxarray.open_rasterio("data/wind_power_density_200m_downsampled.tif") as wind_200m_file:
+    points = wind_200m_file[0].to_pandas().stack().reset_index().dropna()
+    points.columns = ["y", "x", "power_density"]
+
+wind_200m_df = geo_pd.GeoDataFrame(
+    { "power_density": points["power_density"] },
+    geometry=geo_pd.points_from_xy(points["x"], points["y"]),
+)
 #endregion
 
 
