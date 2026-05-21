@@ -7,7 +7,7 @@ import geopandas as geo_pd
 def plot(axes: Axes, power_stations_df: geo_pd.GeoDataFrame, lga_df: geo_pd.GeoDataFrame):
     axes.axis("equal")
     
-    lga_df.boundary.plot(ax=axes)
+    lga_df.simplify(0.01).boundary.plot(ax=axes)
 
     renewable_power_stations_df = power_stations_df[power_stations_df["primaryfueltype"].isin(["Water", "Wind", "Solar", "Biogas", "Biomass"])]
     renewable_power_stations_df = renewable_power_stations_df[renewable_power_stations_df["operationalstatus"] == "Operational"]
