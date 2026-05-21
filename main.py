@@ -36,31 +36,27 @@ qld_electricity_consumption = pd.read_csv("data/qld_average_electricity_consumpt
 qld_electricity_consumption.index = qld_electricity_consumption["Local Government Area"]
 qld_electricity_consumption.drop("Local Government Area", axis=1, inplace=True)
 
-# with rioxarray.open_rasterio("data/wind_power_density_50m_4.tif") as wind_file:
-#     wind_file = wind_file.rio.write_crs("WGS 84")
 
-#     wind_file = wind_file.rio.reproject(
-#         wind_file.rio.crs,
-#         shape=(wind_file.rio.width // 8, wind_file.rio.height // 8),
-#         resampling=Resampling.bilinear
-#     )
+#region Converting Solar and Wind GeoTIFF to GeoDataFrame
+with rioxarray.open_rasterio("data/solar_power.tif") as solar_file:
+    solar_file = solar_file.rio.reproject(
+        solar_file.rio.crs,
+        shape=(solar_file.rio.width, solar_file.rio.height),
+        resampling=Resampling.bilinear
+    )
 
-#     points = wind_file[0].to_pandas().stack().reset_index().dropna()
-#     points.columns = ["y", "x", "power_density"]
+    points = solar_file[0].to_pandas().stack().reset_index().dropna()
+    points.columns = ["y", "x", "power"]
 
-#     wind_df = geo_pd.GeoDataFrame(
-#         { "power_density": points["power_density"] },
-#         geometry=geo_pd.points_from_xy(points["x"] / 100, -points["y"] / 100),
-#     )
-
+solar_df = geo_pd.GeoDataFrame(
+    { "power": points["power"] },
+    geometry=geo_pd.points_from_xy(points["x"], points["y"]),
+)
+#endregion
 
 # Example plot
 import matplotlib.pyplot as plt
 import renewable_generation_vs_sources
-
-# wind_df.plot(column="power_density", ax=plt.gca())
-# lga_df.boundary.plot(color="red", ax=plt.gca())
-# plt.show()
 
 renewable_generation_vs_sources.plot(plt.gca(), power_stations_df, lga_df)
 
