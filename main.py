@@ -55,6 +55,6 @@ solar_df = geo_pd.GeoDataFrame(
 import matplotlib.pyplot as plt
 import renewable_generation_vs_sources
 
-renewable_generation_vs_sources.plot(plt.gca(), power_stations_df, lga_df)
+renewable_generation_vs_sources.plot(plt.gca(), plt.gcf(), power_stations_df, solar_df, lga_df)
 
 plt.show()
