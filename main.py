@@ -21,7 +21,7 @@ power_stations_df = geo_pd.GeoDataFrame(
     geometry=power_station_points
 )
 
-transmission_lines_df = pd.read_csv("data/power_stations.csv")
+transmission_lines_df = pd.read_csv("data/transmission_lines.csv")
 
 transmission_lines_df.index = transmission_lines_df["objectid"]
 transmission_lines_df.drop("objectid", axis=1, inplace=True)
