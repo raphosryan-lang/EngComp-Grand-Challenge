@@ -36,32 +36,32 @@ qld_electricity_consumption = pd.read_csv("data/qld_average_electricity_consumpt
 qld_electricity_consumption.index = qld_electricity_consumption["Local Government Area"]
 qld_electricity_consumption.drop("Local Government Area", axis=1, inplace=True)
 
-with rioxarray.open_rasterio("data/wind_power_density_50m_4.tif") as wind_file:
-    wind_file = wind_file.rio.write_crs("WGS 84")
+# with rioxarray.open_rasterio("data/wind_power_density_50m_4.tif") as wind_file:
+#     wind_file = wind_file.rio.write_crs("WGS 84")
 
-    wind_file = wind_file.rio.reproject(
-        wind_file.rio.crs,
-        shape=(wind_file.rio.width // 8, wind_file.rio.height // 8),
-        resampling=Resampling.bilinear
-    )
+#     wind_file = wind_file.rio.reproject(
+#         wind_file.rio.crs,
+#         shape=(wind_file.rio.width // 8, wind_file.rio.height // 8),
+#         resampling=Resampling.bilinear
+#     )
 
-    points = wind_file[0].to_pandas().stack().reset_index().dropna()
-    points.columns = ["y", "x", "power_density"]
+#     points = wind_file[0].to_pandas().stack().reset_index().dropna()
+#     points.columns = ["y", "x", "power_density"]
 
-    wind_df = geo_pd.GeoDataFrame(
-        { "power_density": points["power_density"] },
-        geometry=geo_pd.points_from_xy(points["x"] / 100, -points["y"] / 100),
-    )
+#     wind_df = geo_pd.GeoDataFrame(
+#         { "power_density": points["power_density"] },
+#         geometry=geo_pd.points_from_xy(points["x"] / 100, -points["y"] / 100),
+#     )
 
 
 # Example plot
 import matplotlib.pyplot as plt
 import renewable_generation_vs_sources
 
-wind_df.plot(column="power_density", ax=plt.gca())
-lga_df.boundary.plot(color="red", ax=plt.gca())
-plt.show()
-
-# renewable_generation_vs_sources.plot(plt.gca(), power_stations_df, lga_df)
-
+# wind_df.plot(column="power_density", ax=plt.gca())
+# lga_df.boundary.plot(color="red", ax=plt.gca())
 # plt.show()
+
+renewable_generation_vs_sources.plot(plt.gca(), power_stations_df, lga_df)
+
+plt.show()
