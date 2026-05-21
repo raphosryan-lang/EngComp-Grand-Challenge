@@ -1,6 +1,5 @@
 from matplotlib.pylab import Axes
 import matplotlib as mpl
-import pandas as pd
 import geopandas as geo_pd
 
 
@@ -16,17 +15,19 @@ def plot(axes: Axes, power_stations_df: geo_pd.GeoDataFrame, lga_df: geo_pd.GeoD
 
     cmap = mpl.colormaps["viridis"]
 
+    cat_mapping = dict(enumerate(renewable_power_stations_df["primaryfueltype"].cat.categories))
+    max_mapping_code = len(cat_mapping) - 1
+
     axes.scatter(
         renewable_power_stations_df["geometry"].x,
         renewable_power_stations_df["geometry"].y,
-        c=cmap(renewable_power_stations_df["primaryfueltype"].cat.codes / (len(renewable_power_stations_df["primaryfueltype"].cat.categories) - 1)),
+        c=cmap(renewable_power_stations_df["primaryfueltype"].cat.codes / max_mapping_code),
         alpha=0.7,
         edgecolor='k',
         zorder=2.5
     )
 
-    cat_mapping = dict(enumerate(renewable_power_stations_df["primaryfueltype"].cat.categories))
     for code, cat in cat_mapping.items():
-        axes.scatter([], [], color=cmap(code / (len(cat_mapping) - 1)), alpha=0.7, edgecolor='k', label=cat)
+        axes.scatter([], [], color=cmap(code / max_mapping_code), alpha=0.7, edgecolor='k', label=cat)
 
     axes.legend(scatterpoints=1, title='Power Stations', loc='upper left')
