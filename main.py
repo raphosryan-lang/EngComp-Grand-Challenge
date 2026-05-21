@@ -39,12 +39,6 @@ qld_electricity_consumption.drop("Local Government Area", axis=1, inplace=True)
 
 #region Converting Solar and Wind GeoTIFF to GeoDataFrame
 with rioxarray.open_rasterio("data/solar_power.tif") as solar_file:
-    solar_file = solar_file.rio.reproject(
-        solar_file.rio.crs,
-        shape=(solar_file.rio.width, solar_file.rio.height),
-        resampling=Resampling.bilinear
-    )
-
     points = solar_file[0].to_pandas().stack().reset_index().dropna()
     points.columns = ["y", "x", "power"]
 
