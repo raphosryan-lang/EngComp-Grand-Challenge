@@ -1,7 +1,6 @@
 import pandas as pd
 import geopandas as geo_pd
 import rioxarray
-from rasterio.enums import Resampling
 
 
 power_stations_df = pd.read_csv("data/power_stations.csv")
@@ -52,7 +51,7 @@ solar_df = geo_pd.GeoDataFrame(
 )
 #endregion
 
-# Example plot
+
 import matplotlib.pyplot as plt
 import renewable_generation_vs_sources
 
