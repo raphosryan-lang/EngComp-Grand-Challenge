@@ -9,13 +9,17 @@ power_stations_df = pd.read_csv("data/power_stations.csv")
 power_stations_df.index = power_stations_df["objectid"]
 power_stations_df.drop("objectid", axis=1, inplace=True)
 
-power_stations_df["geometry"] = geo_pd.points_from_xy(power_stations_df["x_coordinate"], power_stations_df["y_coordinate"])
+power_station_points = geo_pd.points_from_xy(power_stations_df["x_coordinate"], power_stations_df["y_coordinate"])
 power_stations_df.drop(["x_coordinate", "y_coordinate"], axis=1, inplace=True)
 
 power_stations_df["operationalstatus"] = power_stations_df["operationalstatus"].astype("category")
 power_stations_df["primaryfueltype"] = power_stations_df["primaryfueltype"].astype("category")
 
-power_stations_df = geo_pd.GeoDataFrame(power_stations_df)
+power_stations_df = geo_pd.GeoDataFrame(
+    power_stations_df,
+    copy=False,
+    geometry=power_station_points
+)
 
 transmission_lines_df = pd.read_csv("data/power_stations.csv")
 
