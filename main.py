@@ -20,7 +20,7 @@ transmission_lines_df = pd.read_csv("data/power_stations.csv")
 
 transmission_lines_df.index = transmission_lines_df["objectid"]
 transmission_lines_df.drop("objectid", axis=1, inplace=True)
-#hi im here
+
 lga_df = geo_pd.read_file("data/lga/lga.shp")
 lga_df["geometry"] = lga_df["geometry"].buffer(0)
 lga_df = lga_df.dissolve(by="lga_name", as_index=False)
