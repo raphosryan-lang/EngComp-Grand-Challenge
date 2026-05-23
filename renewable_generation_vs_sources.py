@@ -1,4 +1,4 @@
-from matplotlib.pylab import Axes, Figure
+from matplotlib.pylab import Axes
 import matplotlib as mpl
 import geopandas as geo_pd
 
@@ -86,8 +86,9 @@ def plot_solar(
     # gridsize controls the resolution of the heatmap
     hb = axes.hexbin(x, y, C=solar_power, gridsize=120, cmap="inferno")
 
-    axes.figure.colorbar(hb, label="Mean Solar Irradiation")
-    axes.set_title("Australia Solar Irradiation Heatmap (Hexbin)")
+    # kWp is Kilowatt Potential. See https://energytheory.com/how-to-calculate-solar-panel-kwp/
+    axes.figure.colorbar(hb, label="Mean Solar Irradiation (kWh/kWp)")
+    axes.set_title("Australia Solar Irradiation Heatmap")
     axes.axis("equal")
 
 
@@ -138,5 +139,5 @@ def plot_wind(
     hb = axes.hexbin(x, y, C=solar_power, gridsize=120, cmap="inferno")
 
     axes.figure.colorbar(hb, label="Max. Wind Power Density (W/m^2)")
-    axes.set_title("Australia Wind Power Density Heatmap (Hexbin)")
+    axes.set_title("Australia Wind Power Density Heatmap")
     axes.axis("equal")
