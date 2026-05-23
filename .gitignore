@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+data/wind_power_density_50m.tif
+data/wind_power_density_100m.tif
+data/wind_power_density_150m.tif
+data/wind_power_density_200m.tif
