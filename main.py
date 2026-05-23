@@ -55,7 +55,7 @@ with rioxarray.open_rasterio("data/wind_power_density_50m_downsampled.tif") as w
     points.columns = ["y", "x", "power_density"]
 
 wind_50m_df = geo_pd.GeoDataFrame(
-    { "power_density": points["power_density"] },
+    { "50m_power_density": points["power_density"] },
     geometry=geo_pd.points_from_xy(points["x"], points["y"]),
 )
 
@@ -64,7 +64,7 @@ with rioxarray.open_rasterio("data/wind_power_density_100m_downsampled.tif") as 
     points.columns = ["y", "x", "power_density"]
 
 wind_100m_df = geo_pd.GeoDataFrame(
-    { "power_density": points["power_density"] },
+    { "100m_power_density": points["power_density"] },
     geometry=geo_pd.points_from_xy(points["x"], points["y"]),
 )
 
@@ -73,7 +73,7 @@ with rioxarray.open_rasterio("data/wind_power_density_150m_downsampled.tif") as 
     points.columns = ["y", "x", "power_density"]
 
 wind_150m_df = geo_pd.GeoDataFrame(
-    { "power_density": points["power_density"] },
+    { "150m_power_density": points["power_density"] },
     geometry=geo_pd.points_from_xy(points["x"], points["y"]),
 )
 
@@ -82,15 +82,16 @@ with rioxarray.open_rasterio("data/wind_power_density_200m_downsampled.tif") as 
     points.columns = ["y", "x", "power_density"]
 
 wind_200m_df = geo_pd.GeoDataFrame(
-    { "power_density": points["power_density"] },
+    { "200m_power_density": points["power_density"] },
     geometry=geo_pd.points_from_xy(points["x"], points["y"]),
 )
 #endregion
 
-
 import matplotlib.pyplot as plt
 import renewable_generation_vs_sources
 
-renewable_generation_vs_sources.plot(plt.gca(), plt.gcf(), power_stations_df, solar_df, lga_df)
+_, (solar_ax, wind_ax) = plt.subplots(1, 2)
+
+renewable_generation_vs_sources.plot(solar_ax, wind_ax, power_stations_df, solar_df, wind_50m_df, wind_100m_df, wind_150m_df, wind_200m_df, lga_df)
 
 plt.show()
