@@ -39,6 +39,10 @@ qld_electricity_consumption = pd.read_csv("data/qld_average_electricity_consumpt
 qld_electricity_consumption.index = qld_electricity_consumption["Local Government Area"]
 qld_electricity_consumption.drop("Local Government Area", axis=1, inplace=True)
 
+renewable_energy_over_time_df = pd.read_csv("data/renewables_over_time.csv")
+renewable_energy_over_time_df.index = pd.to_datetime(renewable_energy_over_time_df["Year"], format="%Y")
+renewable_energy_over_time_df.drop("Year", axis=1, inplace=True)
+
 
 #region Converting Solar and Wind GeoTIFF to GeoDataFrame
 with rioxarray.open_rasterio("data/solar_power.tif") as solar_file:
@@ -89,9 +93,13 @@ wind_200m_df = geo_pd.GeoDataFrame(
 
 import matplotlib.pyplot as plt
 import renewable_generation_vs_sources
+import renewable_production_overtime
 
 _, (solar_ax, wind_ax) = plt.subplots(1, 2)
 
 renewable_generation_vs_sources.plot(solar_ax, wind_ax, power_stations_df, solar_df, wind_50m_df, wind_100m_df, wind_150m_df, wind_200m_df, lga_df)
 
+plt.show()
+
+renewable_production_overtime.plot(plt.gca(), renewable_energy_over_time_df)
 plt.show()
