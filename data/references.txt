@@ -7,3 +7,5 @@ vic_average_solar_production_by_lga.xlsx: https://www.powercor.com.au/network-pl
 lga.shp: https://digital.atlas.gov.au/datasets/9ba11864213d4df09a749f2df029627c_9/explore
 electricity_generation_by_fueltype: https://www.energy.gov.au/publications/australian-energy-update-2025
 wind_power_density_{50,100,150,200}m.tif: https://globalwindatlas.info
+solar_power.tif: https://globalsolaratlas.info
+renewables_over_time: Collated from data on https://www.energy.gov.au/energy-data/australian-energy-statistics
