@@ -89,16 +89,20 @@ wind_200m_df = geo_pd.GeoDataFrame(
     { "200m_power_density": points["power_density"] },
     geometry=geo_pd.points_from_xy(points["x"], points["y"]),
 )
-#endregion
+endregion
 
 import matplotlib.pyplot as plt
 import renewable_generation_vs_sources
 import renewable_production_overtime
+import energy_production_mix_by_area
 
 _, (solar_ax, wind_ax) = plt.subplots(1, 2)
 
 renewable_generation_vs_sources.plot(solar_ax, wind_ax, power_stations_df, solar_df, wind_50m_df, wind_100m_df, wind_150m_df, wind_200m_df, lga_df)
 
+plt.show()
+
+energy_production_mix_by_area.plot(plt.gca(), power_stations_df, lga_df)
 plt.show()
 
 renewable_production_overtime.plot(plt.gca(), renewable_energy_over_time_df)
